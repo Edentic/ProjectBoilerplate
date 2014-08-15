@@ -1,0 +1,16 @@
+{
+    "name" : "Tommelise",
+    "description": "",
+    "repository" : "",
+    "dependencies" : {
+        "gulp" : "*",
+        "gulp-livereload" : "*",
+        "gulp-autoprefixer" : "*",
+        "gulp-minify-css" : "*",
+        "gulp-concat" : "*",
+        "gulp-uglify" : "*",
+        "gulp-exec" : "*",
+        "gulp-compass" : "*",
+        "gulp-imagemin" : "*"
+    }
+}

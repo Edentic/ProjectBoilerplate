@@ -1,0 +1,38 @@
+
+/* TEAM */
+
+Kasper Baagø Jensen                        
+kasper@edentic.dk                           
+Twitter: @kasperbaago.                          
+Location: Odense, Denmark.
+Visit me at http://edentic.dk
+                            
+Frederik Stahlfest Møller                        
+frederik@edentic.dk                           
+Twitter: @stahlfest.                          
+Location: Odense, Denmark.
+Visit me at http://edentic.dk
+
+							
+/* THANKS */
+
+Henrik Dresbøll
+Anders Blom
+Emil Knudsen
+Sebastian Schäffer Bach
+Peter Dam
+Trine Søndergaard 
+Cosmographic A/S
+We Learn
+Edentic ApS             
+
+                            
+/* SITE */
+                            
+Standards: HTML5, CSS3
+                            
+Components: jQuery
+
+CMS: WordPress
+                        
+Software: PHP Storm, Illustrator, Photoshop.

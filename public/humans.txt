@@ -16,23 +16,15 @@ Visit me at http://edentic.dk
 							
 /* THANKS */
 
-Henrik Dresbøll
-Anders Blom
-Emil Knudsen
-Sebastian Schäffer Bach
-Peter Dam
-Trine Søndergaard 
-Cosmographic A/S
-We Learn
 Edentic ApS             
 
                             
 /* SITE */
                             
-Standards: HTML5, CSS3
+Standards: 
                             
-Components: jQuery
+Components: 
 
-CMS: WordPress
+CMS: 
                         
-Software: PHP Storm, Illustrator, Photoshop.
+Software: 

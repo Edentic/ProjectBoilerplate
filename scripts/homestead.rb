@@ -38,6 +38,7 @@ class Homestead
     # Copy The Bash Aliases
     config.vm.provision "shell" do |s|
       s.inline = "cp /vagrant/aliases /home/vagrant/.bash_aliases"
+      s.inline = "bash /vagrant/scripts/addons.sh"
     end
 
     # Register All Of The Configured Shared Folders

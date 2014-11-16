@@ -1,7 +1,7 @@
 {
-    "name" : "Tommelise",
-    "description": "",
-    "repository" : "",
+    "name" : "Edentic Project Boilerplate",
+    "description": "Boilerplate for Edentic projects",
+    "repository" : "git@github.com:Edentic/ProjectBoilerplate.git",
     "dependencies" : {
         "gulp" : "*",
         "gulp-livereload" : "*",

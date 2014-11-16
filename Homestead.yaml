@@ -1,12 +1,12 @@
 ---
 ip: "192.168.57.10"
-memory: 1024
+memory: 512
 cpus: 1
 
-authorize: /Users/Baagoe/.ssh/id_rsa.pub
+authorize: ~/.ssh/id_rsa.pub
 
 keys:
-    - /Users/Baagoe/.ssh/id_rsa
+    - ~/.ssh/id_rsa
 
 folders:
     - map: ./

@@ -17,15 +17,18 @@ echo "** INSTALLING MAILCATCHA **"
 sudo apt-get install ruby1.9.1-dev -y
 sudo apt-get install libsqlite3-dev
 sudo gem install mailcatcher
-sudo mailcatcher --ip=192.168.57.10
-echo "** INSTALLING OAUTH **"
-sudo pecl install oauth
 
-oauth="
-extension=oauth.so
-"
-sudo echo "$oauth" >> "/etc/php5/cli/php.ini"
-sudo echo "$oauth" >> "/etc/php5/fpm/php.ini"
+sudo sed -i 's/;sendmail_path =/sendmail_path = \/usr\/bin\/env catchmail -f test@edentic.local/g' /etc/php5/fpm/php.ini
+sudo sed -i 's/upload_max_filesize = 2M/upload_max_filesize = 1G/g' /etc/php5/fpm/php.ini
+sudo sed -i 's/post_max_size = 8M/post_max_size = 1G/g' /etc/php5/fpm/php.ini
+touch  /home/vagrant/Code/nginx.conf
+
+# Add config to mods-available for PHP
+# -f flag sets "from" header for us
+echo "sendmail_path = /usr/bin/env $(which catchmail) -f test@local.dev" | sudo tee /etc/php5/mods-available/mailcatcher.ini
+
+# Enable sendmail config for all php SAPIs (apache2, fpm, cli)
+sudo php5enmod mailcatcher
 
 echo "** RESTARTING THINGS **"
 service php5-fpm restart

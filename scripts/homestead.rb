@@ -2,6 +2,7 @@ class Homestead
   def Homestead.configure(config, settings)
     # Configure The Box
     config.vm.box = "laravel/homestead"
+    config.vm.box_version = "<= 0.1.9"
     config.vm.hostname = "homestead"
 
     # Configure A Private Network IP
@@ -48,7 +49,7 @@ class Homestead
 
     # Install All The Configured Nginx Sites
     settings["sites"].each do |site|
-      config.vm.provision "shell" do |s|
+      config.vm.provision "shell", run: "always" do |s|
           s.inline = "bash /vagrant/scripts/serve.sh $1 $2"
           s.args = [site["map"], site["to"]]
       end
@@ -62,6 +63,10 @@ class Homestead
             s.args = [var["key"], var["value"]]
         end
       end
+    end
+
+    config.vm.provision "shell", run: "always" do |s|
+      s.inline = "sudo mailcatcher --http-ip=192.168.57.10"
     end
   end
 end

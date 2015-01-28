@@ -6,7 +6,6 @@
 
   //Typography
   font-family: $font-standard;
-  font-size: 1.2em;
   text-decoration: none;
   text-align: center;
 
@@ -18,7 +17,6 @@
   //Interaction
   cursor: pointer;
   outline: none;
-  transition: all 150ms ease;
 
   &:hover {
     //Layout

@@ -1,0 +1,51 @@
+.main-button {
+  //Layout
+  display: block;
+  margin: 0 auto;
+  border-radius: $r;
+
+  //Typography
+  font-family: $font-standard;
+  font-size: 1.2em;
+  text-decoration: none;
+  text-align: center;
+
+  //Color
+  color: $black;
+  background: $white;
+  border: 1px solid $black;
+
+  //Interaction
+  cursor: pointer;
+  outline: none;
+  transition: all 150ms ease;
+
+  &:hover {
+    //Layout
+    //Typography
+    //Color
+    //Interaction
+
+	&[type=submit] {
+      //Layout
+      //Typography
+      //Color
+      //Interaction
+	}
+  }
+
+  &:focus, &:active {
+    //Layout
+    //Typography
+    //Color
+    //Interaction
+  }
+
+
+  &:disabled, &:visited {
+    //Layout
+    //Typography
+    //Color
+    //Interaction
+  }
+}

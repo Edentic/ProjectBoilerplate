@@ -1,0 +1,35 @@
+/* MAIN MIXIN FILE */
+
+/* Media Query mixin */
+@mixin mq($width, $type:'min') {
+  @if($IE8 == false) {
+    $width: $width / 16;
+    @media all and (#{$type}-width: #{$width}em) {
+      @content;
+    }
+  }
+  @else
+  {
+    @if ($type == 'min' and $width <= 1200) {
+      @content;
+    }
+  }
+}
+
+@mixin isRetina() {
+  @media
+  (-webkit-min-device-pixel-ratio: 2),
+  (min-resolution: 192dpi) {
+    @content;
+  }
+}
+
+@mixin chrisCoyier() {
+  &:after {
+    display: block;
+    content: '';
+    height: 1px;
+    width: 100%;
+    clear: both;
+  }
+}

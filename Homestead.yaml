@@ -1,6 +1,6 @@
 ---
 ip: "192.168.57.10"
-memory: 512
+memory: 1024
 cpus: 1
 
 authorize: ~/.ssh/id_rsa.pub
@@ -19,3 +19,6 @@ sites:
 variables:
     - key: APP_ENV
       value: local
+
+databases:
+  - homestead

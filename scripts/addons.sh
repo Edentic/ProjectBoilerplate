@@ -33,3 +33,9 @@ sudo php5enmod mailcatcher
 echo "** RESTARTING THINGS **"
 service php5-fpm restart
 service nginx restart
+
+echo "** INSTALLING PHPUNIT **"
+wget https://phar.phpunit.de/phpunit.phar
+chmod +x phpunit.phar
+sudo mv phpunit.phar /usr/local/bin/phpunit
+sudo phpunit --version

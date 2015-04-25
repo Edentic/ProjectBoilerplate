@@ -122,7 +122,7 @@ class Homestead
 
 
     config.vm.provision "shell", run: "always" do |s|
-      s.inline = "sudo mailcatcher --foreground --http-ip=192.168.57.10 &"
+      s.inline = "mailcatcher --http-ip=192.168.57.10"
     end
 
     # Configure Blackfire.io

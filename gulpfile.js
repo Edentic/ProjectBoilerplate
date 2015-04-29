@@ -17,6 +17,7 @@ var scssDir = 'sass/';
 var jsDir = themeDir + 'js/';
 var cssDir = themeDir + 'stylesheets/';
 var assetDir = themeDir + 'assets/img/';
+var mainSassFiles = [scssDir + 'style.scss', scssDir + 'no-mq.scss'];
 
 function handleError(err) {
   console.log(err.toString());
@@ -55,7 +56,7 @@ gulp.task('jsdev', function() {
 });
 
 gulp.task('compass', function() {
-  gulp.src(scssDir + '**/**.scss')
+  gulp.src(mainSassFiles)
     .pipe(compass({
       css: 'csstemp',
       sass: scssDir,

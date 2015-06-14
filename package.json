@@ -6,15 +6,18 @@
       "gulp": "*",
       "gulp-autoprefixer": "*",
       "gulp-bower": "*",
-      "gulp-compass": "*",
       "gulp-concat": "*",
+      "gulp-exec": "*",
       "gulp-filter": "*",
       "gulp-imagemin": "*",
       "gulp-livereload": "*",
       "gulp-minify-css": "*",
+      "gulp-sass": "*",
+      "gulp-shell": "^0.4.1",
+      "gulp-strip-debug": "^1.0.2",
       "gulp-uglify": "*",
+      "laravel-elixir": "*",
       "main-bower-files": "*",
-      "run-sequence": "*",
-      "gulp-shell": "*"
+      "run-sequence": "^1.0.2"
     }
 }

@@ -1,16 +1,18 @@
 var gulp = require('gulp'),
-  livereload = require('gulp-livereload'),
-  prefix = require('gulp-autoprefixer'),
-  minifyCSS = require('gulp-minify-css'),
-  concat = require('gulp-concat'),
-  uglify = require('gulp-uglify'),
-  compass = require('gulp-compass'),
-  imagemin = require('gulp-imagemin'),
-  gulpBowerFiles = require('main-bower-files'),
-  gulpFilter = require('gulp-filter'),
-  bower = require('gulp-bower'),
-  shell = require('gulp-shell'),
-  runSequence = require('run-sequence');
+    livereload = require('gulp-livereload'),
+    prefix = require('gulp-autoprefixer'),
+    minifyCSS = require('gulp-minify-css'),
+    concat = require('gulp-concat'),
+    uglify = require('gulp-uglify'),
+    exec = require('gulp-exec'),
+    sass = require('gulp-sass'),
+    imagemin = require('gulp-imagemin'),
+    gulpBowerFiles = require('main-bower-files'),
+    gulpFilter = require('gulp-filter'),
+    bower = require('gulp-bower'),
+    shell = require('gulp-shell'),
+    runSequence = require('run-sequence'),
+    stripDebug = require('gulp-strip-debug');
 
 var themeDir = '';
 var scssDir = 'sass/';
@@ -32,7 +34,7 @@ gulp.task('update', shell.task([
 ]));
 
 gulp.task('js', function() {
-  gulp.src(gulpBowerFiles({debugging:false}))
+  gulp.src(gulpBowerFiles({debugging:false, filter: '**/*.js'}))
     .pipe(filter).on('error', handleError)
     .pipe(concat('bower.js')).on('error', handleError)
     .pipe(uglify({mangle: false})).on('error', handleError)
@@ -41,11 +43,12 @@ gulp.task('js', function() {
 
   gulp.src('jsSrc/*.js')
     .pipe(uglify())
+    .pipe(stripDebug())
     .pipe(gulp.dest(jsDir));
 });
 
 gulp.task('jsdev', function() {
-  gulp.src(gulpBowerFiles({debugging:true}))
+  gulp.src(gulpBowerFiles({debugging:true, filter: '**/*.js'}))
     .pipe(filter).on('error', handleError)
     .pipe(concat('bower.js')).on('error', handleError)
     .pipe(filter.restore()).on('error', handleError)
@@ -57,14 +60,7 @@ gulp.task('jsdev', function() {
 
 gulp.task('compass', function() {
   gulp.src(mainSassFiles)
-    .pipe(compass({
-      css: 'csstemp',
-      sass: scssDir,
-      logging  : true,
-      comments : false,
-      style    : 'expanded',
-      require: 'susy'
-    })).on('error', handleError)
+    .pipe(sass()).on('error', handleError)
     .pipe(prefix({ cascade: true }))
     .pipe(minifyCSS())
     .pipe(gulp.dest(cssDir));

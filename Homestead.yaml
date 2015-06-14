@@ -10,6 +10,9 @@ mailcatcher: false
 npm_install: true
 bower_install: true
 
+plugins:
+  - vagrant-host-shell
+
 authorize: ~/.ssh/id_rsa.pub
 
 keys:

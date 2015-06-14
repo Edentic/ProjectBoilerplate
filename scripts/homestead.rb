@@ -1,5 +1,15 @@
 class Homestead
   def Homestead.configure(config, settings)
+    required_plugins = settings["plugins"]
+
+    plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
+    if not plugins_to_install.empty?
+      puts "Installing plugins: #{plugins_to_install.join(' ')}"
+      system "vagrant plugin install #{plugins_to_install.join(' ')}"
+      exec "vagrant #{ARGV.join(' ')}"
+    end
+
+
     # Smphet The VM Provider
     ENV['VAGRANT_DEFAULT_PROVIDER'] = settings["provider"] ||= "virtualbox"
 
@@ -121,18 +131,14 @@ class Homestead
     end
 
     if settings["npm_install"] == true
-        config.vm.provision "shell" do |s|
-            s.inline = "sudo npm -g install npm@next"
-        end
-
-        config.vm.provision "shell" do |s|
-            s.inline = "cd /home/vagrant/Code/ && npm install"
+        config.vm.provision :host_shell do |host_shell|
+            host_shell.inline = 'npm install'
         end
     end
 
     if settings["bower_install"] == true
-        config.vm.provision "shell" do |s|
-            s.inline = "cd /home/vagrant/Code/ && bower install"
+        config.vm.provision :host_shell do |host_shell|
+            host_shell.inline = 'bower install'
         end
     end
 

@@ -3,6 +3,13 @@ ip: "192.168.57.10"
 memory: 1024
 cpus: 1
 
+composer: false
+laravel: false
+wordpress: false
+mailcatcher: false
+npm_install: true
+bower_install: true
+
 authorize: ~/.ssh/id_rsa.pub
 
 keys:

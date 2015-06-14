@@ -118,11 +118,50 @@ class Homestead
 
     config.vm.provision "shell", run: "always" do |s|
       s.inline = "composer self-update"
-     end
+    end
 
+    if settings["npm_install"] == true
+        config.vm.provision "shell" do |s|
+            s.inline = "sudo npm -g install npm@next"
+        end
 
-    config.vm.provision "shell", run: "always" do |s|
-      s.inline = "mailcatcher --http-ip=192.168.57.10"
+        config.vm.provision "shell" do |s|
+            s.inline = "cd /home/vagrant/Code/ && npm install"
+        end
+    end
+
+    if settings["bower_install"] == true
+        config.vm.provision "shell" do |s|
+            s.inline = "cd /home/vagrant/Code/ && bower install"
+        end
+    end
+
+    if settings["composer"] == true
+        config.vm.provision "shell" do |s|
+            s.inline = "cd /home/vagrant/Code/ && composer install"
+        end
+    end
+
+    if settings["laravel"] == true
+        config.vm.provision "shell" do |s|
+            s.inline = "cd /home/vagrant/Code/ && cp .env.local .env"
+        end
+
+        config.vm.provision "shell", run: "always" do |s|
+            s.inline = "cd /home/vagrant/Code/ && php artisan migrate --force"
+        end
+    end
+
+    if settings["wordpress"] == true
+        config.vm.provision "shell" do |s|
+            s.inline = "cd /home/vagrant/Code/ && cp wp-config.local public/wp-config.php"
+        end
+    end
+
+    if settings["mailcatcher"] == true
+        config.vm.provision "shell", run: "always" do |s|
+            s.inline = "mailcatcher --http-ip=192.168.57.10"
+        end
     end
 
     # Configure Blackfire.io

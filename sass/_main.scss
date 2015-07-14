@@ -2,7 +2,21 @@
 @import "main_mixins";
 @import "main_functions";
 
-//Reset stylesheet
+/*
+Enable if bourbon is installed
+@import "../bower_components/bourbon/app/assets/stylesheets/functions/shade";
+@import "../bower_components/bourbon/app/assets/stylesheets/functions/tint";
+*/
+
+/*
+Enable if susy is installed
+@import "../bower_components/susy/sass/susy";
+*/
+
+/*
+Enable if reset is installed
+@import "../bower_components/";
+*/
 
 //Fonts
 @import "fonts";
@@ -35,6 +49,6 @@
 @import "extends/main-button";
 @import "extends/wrapper";
 
-//Molecules
+//Components
 
-//Organisms
+//Templates

@@ -11,29 +11,29 @@
 @import "animations";
 
 //Atoms
-@import "elements/atoms/html";
-@import "elements/atoms/body";
-@import "elements/atoms/h1";
-@import "elements/atoms/h2";
-@import "elements/atoms/h3";
-@import "elements/atoms/h4";
-@import "elements/atoms/h5";
-@import "elements/atoms/p";
-@import "elements/atoms/a";
-@import "elements/atoms/li";
-@import "elements/atoms/ul";
-@import "elements/atoms/input";
-@import "elements/atoms/label";
-@import "elements/atoms/img";
-@import "elements/atoms/figcaption";
-@import "elements/atoms/aside";
-@import "elements/atoms/table";
-@import "elements/atoms/th";
-@import "elements/atoms/td";
+@import "atoms/html";
+@import "atoms/body";
+@import "atoms/h1";
+@import "atoms/h2";
+@import "atoms/h3";
+@import "atoms/h4";
+@import "atoms/h5";
+@import "atoms/p";
+@import "atoms/a";
+@import "atoms/li";
+@import "atoms/ul";
+@import "atoms/input";
+@import "atoms/label";
+@import "atoms/img";
+@import "atoms/figcaption";
+@import "atoms/aside";
+@import "atoms/table";
+@import "atoms/th";
+@import "atoms/td";
 
 //Extends
-@import "elements/extends/main-button";
-@import "elements/extends/wrapper";
+@import "extends/main-button";
+@import "extends/wrapper";
 
 //Molecules
 

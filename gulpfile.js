@@ -19,7 +19,7 @@ var scssDir = 'sass/';
 var jsDir = themeDir + 'js/';
 var cssDir = themeDir + 'stylesheets/';
 var assetDir = themeDir + 'assets/img/';
-var mainSassFiles = [scssDir + 'style.scss', scssDir + 'no-mq.scss'];
+var mainSassFiles = 'sass/output/*.scss';
 
 function handleError(err) {
   console.log(err.toString());

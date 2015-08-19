@@ -1,3 +1,4 @@
+.vagrant/
 node_modules
 .sass-cache
 csstemp
@@ -5,3 +6,4 @@ bower_components
 stylesheets
 bower.js
 nginx.conf
+.env

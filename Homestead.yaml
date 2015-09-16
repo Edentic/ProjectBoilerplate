@@ -9,9 +9,7 @@ wordpress: false
 mailcatcher: false
 npm_install: true
 bower_install: true
-
-plugins:
-  - vagrant-host-shell
+run_gulp: true
 
 authorize: ~/.ssh/id_rsa.pub
 

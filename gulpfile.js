@@ -30,15 +30,16 @@ var filter = gulpFilter('**/**.js');
 
 gulp.task('update', shell.task([
   'npm install',
-  'bower install'
+  'bower install --allow-root'
 ]));
+
+gulp.task('localinstall', shell.task('npm rebuild node-sass'));
 
 gulp.task('js', function() {
   gulp.src(gulpBowerFiles({debugging:false, filter: '**/*.js'}))
     .pipe(filter).on('error', handleError)
     .pipe(concat('bower.js')).on('error', handleError)
     .pipe(uglify({mangle: false})).on('error', handleError)
-    .pipe(filter.restore()).on('error', handleError)
     .pipe(gulp.dest(jsDir));
 
   gulp.src('jsSrc/*.js')
@@ -51,7 +52,6 @@ gulp.task('jsdev', function() {
   gulp.src(gulpBowerFiles({debugging:true, filter: '**/*.js'}))
     .pipe(filter).on('error', handleError)
     .pipe(concat('bower.js')).on('error', handleError)
-    .pipe(filter.restore()).on('error', handleError)
     .pipe(gulp.dest(jsDir));
 
   gulp.src('jsSrc/*.js')

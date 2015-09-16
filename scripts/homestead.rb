@@ -1,14 +1,5 @@
 class Homestead
   def Homestead.configure(config, settings)
-    required_plugins = settings["plugins"]
-
-    plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
-    if not plugins_to_install.empty?
-      puts "Installing plugins: #{plugins_to_install.join(' ')}"
-      system "vagrant plugin install #{plugins_to_install.join(' ')}"
-      exec "vagrant #{ARGV.join(' ')}"
-    end
-
 
     # Smphet The VM Provider
     ENV['VAGRANT_DEFAULT_PROVIDER'] = settings["provider"] ||= "virtualbox"
@@ -126,20 +117,32 @@ class Homestead
       s.inline = "bash /vagrant/scripts/addons.sh"
     end
 
+    if settings["mailcatcher"] == true
+      config.vm.provision "shell" do |s|
+        s.inline = "bash /vagrant/scripts/mailcatcher.sh"
+      end
+    end
+
     config.vm.provision "shell", run: "always" do |s|
       s.inline = "composer self-update"
     end
 
     if settings["npm_install"] == true
-        config.vm.provision :host_shell do |host_shell|
-            host_shell.inline = 'npm install'
+        config.vm.provision "shell" do |s|
+            s.inline = "cd /home/vagrant/Code/ && sudo npm install"
         end
     end
 
     if settings["bower_install"] == true
-        config.vm.provision :host_shell do |host_shell|
-            host_shell.inline = 'bower install'
+        config.vm.provision "shell" do |s|
+            s.inline = "cd /home/vagrant/Code/ && bower install --allow-root"
         end
+    end
+
+    if settings["run_gulp"] == true
+      config.vm.provision "shell", run: "always" do |s|
+        s.inline = "cd /home/vagrant/Code/ && gulp"
+      end
     end
 
     if settings["composer"] == true

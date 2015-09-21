@@ -27,13 +27,7 @@ chmod +x phpunit.phar
 sudo mv phpunit.phar /usr/local/bin/phpunit
 sudo phpunit --version
 
-echo "** INSTALLING NODE**"
-sudo apt-get install python-software-properties
-sudo add-apt-repository ppa:chris-lea/node.js
-sudo apt-get update
-sudo apt-get install nodejs
-npm install -g npm
-
-echo "** INSTALLING GULP AND BOWER **"
-npm install -g gulp
-npm install -g bower
+echo "** UPDATING NPM**"
+sudo npm cache clean -f
+sudo npm install -g npm
+sudo npm cache clean -f

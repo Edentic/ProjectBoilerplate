@@ -6,7 +6,7 @@ class Homestead
 
     # Configure The Box
     config.vm.box = "laravel/homestead"
-    config.vm.box_version = ">= 0.2.5"
+    config.vm.box_version = ">= 0.2.7"
 
     # Configure A Private Network IP
     config.vm.network :private_network, ip: settings["ip"] ||= "192.168.10.10"
@@ -41,6 +41,10 @@ class Homestead
       settings["ports"].each do |port|
         config.vm.network "forwarded_port", guest: port["guest"] || port["to"], host: port["host"] || port["send"], protocol: port["protocol"] ||= "tcp"
       end
+    end
+
+    config.vm.provision "shell", run: "always" do |s|
+      s.inline = "service beanstalkd start"
     end
 
     # Configure The Public Key For SSH Access
@@ -139,12 +143,6 @@ class Homestead
         end
     end
 
-    if settings["run_gulp"] == true
-      config.vm.provision "shell", run: "always" do |s|
-        s.inline = "cd /home/vagrant/Code/ && gulp"
-      end
-    end
-
     if settings["composer"] == true
         config.vm.provision "shell" do |s|
             s.inline = "cd /home/vagrant/Code/ && composer install"
@@ -153,11 +151,19 @@ class Homestead
 
     if settings["laravel"] == true
         config.vm.provision "shell" do |s|
-            s.inline = "cd /home/vagrant/Code/ && cp .env.local .env"
+            s.inline = "cd /home/vagrant/Code/ && cp .env.local .env && php artisan key:generate"
         end
 
         config.vm.provision "shell", run: "always" do |s|
             s.inline = "cd /home/vagrant/Code/ && php artisan migrate --force"
+        end
+
+        config.vm.provision "shell" do |s|
+          s.inline = "cp /vagrant/scripts/laravel-worker.conf /etc/supervisor/conf.d/laravel-worker.conf"
+        end
+
+        config.vm.provision "shell", run: "always" do |s|
+          s.inline = "service supervisor restart"
         end
     end
 
@@ -171,6 +177,12 @@ class Homestead
         config.vm.provision "shell", run: "always" do |s|
             s.inline = "mailcatcher --http-ip=192.168.57.10"
         end
+    end
+
+    if settings["run_gulp"] == true
+      config.vm.provision "shell", run: "always" do |s|
+        s.inline = "cd /home/vagrant/Code/ && gulp"
+      end
     end
 
     # Configure Blackfire.io

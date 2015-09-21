@@ -14,7 +14,7 @@ var gulp = require('gulp'),
     runSequence = require('run-sequence'),
     stripDebug = require('gulp-strip-debug');
 
-var themeDir = '';
+var themeDir = 'public/';
 var scssDir = 'sass/';
 var jsDir = themeDir + 'js/';
 var cssDir = themeDir + 'stylesheets/';
@@ -29,7 +29,6 @@ function handleError(err) {
 var filter = gulpFilter('**/**.js');
 
 gulp.task('update', shell.task([
-  'npm install',
   'bower install --allow-root'
 ]));
 

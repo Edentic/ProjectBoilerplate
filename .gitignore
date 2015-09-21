@@ -8,4 +8,4 @@ bower.js
 nginx.conf
 .env
 .idea/
-vendor
+vendor/

@@ -1,3 +1,39 @@
+@keyframes msg-show {
+
+  0% {
+    transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    transform: translate3d(0, 100%, 0);
+    opacity: 0;
+  }
+
+  80% {
+    transform: translate3d(0, -5%, 0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes msg-hide {
+
+  0% {
+    transition-timing-function: cubic-bezier(0.215, 0.610, 0.355, 1.000);
+    transform: none;
+    opacity: 1;
+  }
+
+  20% {
+    transform: translate3d(0, -5%, 0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
 @keyframes fade-in {
   0% {
     opacity: 0;

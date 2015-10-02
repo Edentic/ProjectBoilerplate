@@ -3,25 +3,25 @@
   label {
     margin: 1em 0 0.2em;
     font-size: 0.9em;
-    color: rbga($black,0.5);
+    color: rgba($black,0.5);
   }
 
   input, textarea  {
     border-top: 1px solid transparent;
     border-right: 1px solid transparent;
     border-left: 1px solid transparent;
-    border-bottom: 1px solid rbga($black,0.2);
+    border-bottom: 1px solid rgba($black,0.2);
     font-size: 0.9em;
     border-radius: 0;
     padding-left: 0;
   }
 
   input:hover {
-    border-bottom: 1px solid rbga($black,0.5);
+    border-bottom: 1px solid rgba($black,0.5);
   }
   input:focus {
-    border-bottom: 1px solid rbga($black,0.8);
-    color: rbga($black,0.8);
+    border-bottom: 1px solid rgba($black,0.8);
+    color: rgba($black,0.8);
   }
   input:focus:hover {
     border-bottom: 1px solid $black;

@@ -5,7 +5,6 @@
     "dependencies": {
       "gulp": "~3.9.*",
       "gulp-autoprefixer": "~2.3.*",
-      "gulp-bower": "~0.0.*",
       "gulp-concat": "2.6.*",
       "gulp-exec": "~2.1.*",
       "gulp-filter": "~2.0.*",

@@ -9,7 +9,6 @@ var gulp = require('gulp'),
     imagemin = require('gulp-imagemin'),
     gulpBowerFiles = require('main-bower-files'),
     gulpFilter = require('gulp-filter'),
-    bower = require('gulp-bower'),
     shell = require('gulp-shell'),
     runSequence = require('run-sequence'),
     stripDebug = require('gulp-strip-debug');

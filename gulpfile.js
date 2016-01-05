@@ -1,7 +1,7 @@
 var gulp = require('gulp'),
     livereload = require('gulp-livereload'),
     prefix = require('gulp-autoprefixer'),
-    minifyCSS = require('gulp-minify-css'),
+    minifyCSS = require('gulp-cssnano'),
     concat = require('gulp-concat'),
     uglify = require('gulp-uglify'),
     exec = require('gulp-exec'),

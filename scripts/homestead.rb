@@ -6,7 +6,7 @@ class Homestead
 
     # Configure The Box
     config.vm.box = "laravel/homestead"
-    config.vm.box_version = ">= 0.2.7"
+    config.vm.box_version = "0.3.3"
 
     # Configure A Private Network IP
     config.vm.network :private_network, ip: settings["ip"] ||= "192.168.10.10"
@@ -133,7 +133,7 @@ class Homestead
 
     if settings["npm_install"] == true
         config.vm.provision "shell" do |s|
-            s.inline = "cd /home/vagrant/Code/ && sudo npm install"
+            s.inline = "cp /home/vagrant/Code/package.json /home/vagrant/package.json && cd /home/vagrant/ && sudo npm install"
         end
     end
 

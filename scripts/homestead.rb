@@ -35,6 +35,7 @@ class Homestead
     config.vm.network "forwarded_port", guest: 443, host: 44300
     config.vm.network "forwarded_port", guest: 3306, host: 33060
     config.vm.network "forwarded_port", guest: 5432, host: 54320
+    config.vm.network "forwarded_port", guest: 35729, host: 35729
 
     # Add Custom Ports From Configuration
     if settings.has_key?("ports")
@@ -127,6 +128,13 @@ class Homestead
       end
     end
 
+
+    if settings["selenium"] == true
+      config.vm.provision "shell" do |s|
+        s.inline = "bash /vagrant/scripts/seleniuminstall.sh"
+      end
+    end
+
     config.vm.provision "shell", run: "always" do |s|
       s.inline = "composer self-update"
     end
@@ -144,14 +152,14 @@ class Homestead
     end
 
     if settings["composer"] == true
-        config.vm.provision "shell" do |s|
+        config.vm.provision "shell", run: "always" do |s|
             s.inline = "cd /home/vagrant/Code/ && composer install"
         end
     end
 
     if settings["laravel"] == true
         config.vm.provision "shell" do |s|
-            s.inline = "cd /home/vagrant/Code/ && cp .env.local .env && php artisan key:generate"
+            s.inline = "cd /home/vagrant/Code/ && cp -n .env.local .env && php artisan key:generate"
         end
 
         config.vm.provision "shell", run: "always" do |s|
@@ -160,10 +168,6 @@ class Homestead
 
         config.vm.provision "shell" do |s|
           s.inline = "cp /vagrant/scripts/laravel-worker.conf /etc/supervisor/conf.d/laravel-worker.conf"
-        end
-
-        config.vm.provision "shell", run: "always" do |s|
-          s.inline = "service supervisor restart"
         end
     end
 

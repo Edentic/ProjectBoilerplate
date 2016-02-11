@@ -25,9 +25,9 @@ service php5-fpm restart
 service nginx restart
 
 echo "** INSTALLING PHPUNIT **"
-wget https://phar.phpunit.de/phpunit-4.8.16.phar
-chmod +x phpunit-4.8.16.phar
-sudo mv phpunit-4.8.16.phar /usr/local/bin/phpunit
+wget https://phar.phpunit.de/phpunit.phar
+chmod +x phpunit.phar
+sudo mv phpunit.phar /usr/local/bin/phpunit
 sudo phpunit --version
 
 echo "** UPDATING NPM**"

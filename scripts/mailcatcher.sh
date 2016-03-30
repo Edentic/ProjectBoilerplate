@@ -1,7 +1,8 @@
 echo "** INSTALLING MAILCATCHA **"
 sudo apt-get install ruby-dev -y
 sudo apt-get install libsqlite3-dev
-sudo gem install mailcatcher
+sudo gem install mime-types --version "< 3"
+sudo gem install mailcatcher --conservative
 
 sudo sed -i 's/;sendmail_path =/sendmail_path = \/usr\/bin\/env catchmail -f test@edentic.local/g' /etc/php5/fpm/php.ini
 

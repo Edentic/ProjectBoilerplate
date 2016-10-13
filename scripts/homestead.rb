@@ -139,9 +139,9 @@ class Homestead
       s.inline = "composer self-update"
     end
 
-    if settings["npm_install"] == true
+    if settings["yarn_install"] == true
         config.vm.provision "shell" do |s|
-            s.inline = "cp /home/vagrant/Code/package.json /home/vagrant/package.json && cd /home/vagrant/ && sudo npm install"
+            s.inline = "cd /home/vagrant/Code/ && yarn install"
         end
     end
 

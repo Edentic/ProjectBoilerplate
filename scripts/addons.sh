@@ -30,10 +30,11 @@ chmod +x phpunit.phar
 sudo mv phpunit.phar /usr/local/bin/phpunit
 sudo phpunit --version
 
-echo "** UPDATING NPM**"
-sudo npm cache clean -f
-sudo npm install -g npm
-sudo npm cache clean -f
+echo "** INSTALLING YARN **"
+sudo apt-key adv --keyserver pgp.mit.edu --recv D101F7899D41F3C3
+echo "deb http://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+sudo apt-get update
+sudo apt-get install yarn
 
 echo "** SPEEDING UP DB **"
 sudo echo "innodb_flush_log_at_trx_commit = 2" >> /etc/mysql/my.cnf

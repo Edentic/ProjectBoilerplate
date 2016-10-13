@@ -8,7 +8,7 @@ laravel: false
 wordpress: false
 mailcatcher: false
 selenium: false
-npm_install: true
+yarn_install: true
 bower_install: true
 run_gulp: true
 

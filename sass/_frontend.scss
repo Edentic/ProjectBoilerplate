@@ -2,15 +2,10 @@
 @import "main_mixins";
 @import "main_functions";
 
-/*
-Enable if susy is installed
-@import "../bower_components/susy/sass/susy";
-*/
 
-/*
-Enable if reset is installed
-@import "../bower_components/";
-*/
+//Enable if bourbon is installed
+//@import "../bower_components/bourbon/app/assets/stylesheets/functions/shade";
+//@import "../bower_components/bourbon/app/assets/stylesheets/functions/tint";
 
 //Fonts
 @import "fonts";

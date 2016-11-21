@@ -10,3 +10,4 @@ nginx.conf
 .idea/
 vendor/
 public/js
+public/css

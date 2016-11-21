@@ -11,7 +11,13 @@ var gulp = require('gulp'),
     gulpFilter = require('gulp-filter'),
     shell = require('gulp-shell'),
     runSequence = require('run-sequence'),
-    stripDebug = require('gulp-strip-debug');
+    stripDebug = require('gulp-strip-debug'),
+    browserify = require('browserify'),
+    es = require('event-stream'),
+    source = require('vinyl-source-stream'),
+    buffer = require('vinyl-buffer'),
+    sourcemaps = require('gulp-sourcemaps'),
+    combiner = require('stream-combiner2');
 
 var themeDir = 'public/';
 var scssDir = 'sass/';
@@ -19,6 +25,14 @@ var jsDir = themeDir + 'js/';
 var cssDir = themeDir + 'stylesheets/';
 var assetDir = themeDir + 'assets/img/';
 var mainSassFiles = 'sass/output/*.scss';
+var componentFiles = [
+  {
+    main: 'resources/assets/js/app.js',
+    output: 'app.js'
+  }
+];
+var sassComponentFile = 'sass/_vueComponents.scss';
+var production = false;
 
 function handleError(err) {
   console.log(err.toString());
@@ -31,37 +45,98 @@ gulp.task('update', shell.task([
   'bower install --allow-root'
 ]));
 
-gulp.task('localinstall', shell.task('npm rebuild node-sass'));
-
-gulp.task('js', function() {
-  gulp.src(gulpBowerFiles({debugging:false, filter: '**/*.js'}))
-    .pipe(filter).on('error', handleError)
-    .pipe(concat('bower.js')).on('error', handleError)
-    .pipe(uglify({mangle: false})).on('error', handleError)
-    .pipe(gulp.dest(jsDir));
-
-  gulp.src('jsSrc/*.js')
-    .pipe(uglify())
-    .pipe(stripDebug())
-    .pipe(gulp.dest(jsDir));
+gulp.task('setProduction', function() {
+  production = true;
+  return process.env.NODE_ENV = 'production';
 });
 
-gulp.task('jsdev', function() {
-  gulp.src(gulpBowerFiles({debugging:true, filter: '**/*.js'}))
-    .pipe(filter).on('error', handleError)
-    .pipe(concat('bower.js')).on('error', handleError)
-    .pipe(gulp.dest(jsDir));
+gulp.task('vuejs', function() {
+  var combines = componentFiles.map(function(item) {
+    var b = browserify({
+      entries: item.main,
+      debug: true
+    });
+    b.transform('aliasify');
+    b.transform('vueify', {global: true});
+    b.plugin('bundlify-scss', {
+      output: sassComponentFile
+    });
+    b.transform('babelify', {presets: ["latest"]});
 
-  gulp.src('jsSrc/*.js')
-    .pipe(gulp.dest(jsDir));
+    return [b, item.output];
+  });
+
+  es.merge(combines.map(function(item, key) {
+    var combineArr = [ ];
+    if(production) {
+      combineArr = [
+        item[0].bundle(),
+        source(item[1]),
+        buffer(),
+        stripDebug(),
+        sourcemaps.init({loadMaps: true}),
+        uglify(),
+        sourcemaps.write('./'),
+        gulp.dest(jsDir)
+      ];
+    } else {
+      combineArr = [
+        item[0].bundle(),
+        source(item[1]),
+        buffer(),
+        sourcemaps.init({loadMaps: true}),
+        sourcemaps.write('./'),
+        gulp.dest(jsDir)
+      ];
+    }
+
+    var combined = combiner.obj(combineArr);
+    combined.on('error', handleError);
+    return combined;
+  }));
 });
+
+gulp.task('bower', function() {
+  var bowerFlow = gulp.src(gulpBowerFiles({debugging: !production}))
+      .pipe(filter).on('error', handleError)
+      .pipe(concat('bower.js')).on('error', handleError);
+
+  if(production) {
+    bowerFlow.pipe(uglify({mangle: false})).on('error', handleError);
+  }
+
+  bowerFlow.pipe(filter.restore()).on('error', handleError)
+      .pipe(gulp.dest(jsDir));
+
+  return bowerFlow;
+});
+
+gulp.task('jssrc', function() {
+  var jsSrc = gulp.src('jsSrc/*.js');
+  if(production) {
+    jsSrc.pipe(uglify());
+  }
+
+  return jsSrc.pipe(gulp.dest(jsDir));
+});
+
+gulp.task('js', [
+  'bower',
+  //'vuejs',
+  'jssrc'
+]);
 
 gulp.task('compass', function() {
-  gulp.src(mainSassFiles)
-    .pipe(sass()).on('error', handleError)
-    .pipe(prefix({ cascade: true }))
-    .pipe(minifyCSS())
-    .pipe(gulp.dest(cssDir));
+  var sassFLow = gulp.src(mainSassFiles)
+      .pipe(sass()).on('error', handleError)
+      .pipe(prefix({ cascade: true }));
+
+  //if(production) {
+  sassFLow.pipe(minifyCSS());
+  //}
+
+  return sassFLow.pipe(gulp.dest(cssDir))
+      .pipe(livereload());
 });
 
 gulp.task('imageoptim', function() {
@@ -75,12 +150,12 @@ gulp.task('imageoptim', function() {
 gulp.task('watch', function() {
   livereload.listen();
   gulp.watch(scssDir + '**/**.scss', ['compass']);
-  gulp.watch(['jsSrc/*.js', 'adminJs/**/*.js'], ['jsdev']);
-  gulp.watch(jsDir + '**.css').on('change', livereload.changed);
+  gulp.watch(['resources/assets/js/*.js', 'resources/components/**.vue', 'resources/components/**/**.vue'], ['vuejs']);
+  gulp.watch(['jsSrc/*.js'], ['jssrc']);
 });
 
-gulp.task('default', function(callback) {
-  runSequence('update',
-    ['js', 'compass', 'imageoptim'],
-    callback);
+gulp.task('default', ['setProduction'], function(callback) {
+  return runSequence('update',
+      ['js', 'compass', 'imageoptim'],
+      callback);
 });

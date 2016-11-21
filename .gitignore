@@ -9,3 +9,4 @@ nginx.conf
 .env
 .idea/
 vendor/
+public/js

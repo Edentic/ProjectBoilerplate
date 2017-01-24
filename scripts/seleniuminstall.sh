@@ -19,8 +19,9 @@ case "${1:-''}" in
         then
             echo "Selenium is already running."
         else
-            export DISPLAY=localhost:99.0
-            selenium-standalone start > /var/log/selenium/output.log 2> /var/log/selenium/error.log & echo $! > /tmp/selenium.pid
+            export DISPLAY=:99
+            export DBUS_SESSION_BUS_ADDRESS=/dev/null
+            java -jar /home/vagrant/selenium.jar > /var/log/selenium/output.log 2> /var/log/selenium/error.log & echo $! > /tmp/selenium.pid
             echo "Starting Selenium..."
 
             error=$?
@@ -53,8 +54,9 @@ case "${1:-''}" in
             kill -HUP `cat /tmp/selenium.pid`
             test -f /tmp/selenium.pid && rm -f /tmp/selenium.pid
             sleep 1
-            export DISPLAY=localhost:99.0
-            selenium-standalone start > /var/log/selenium/output.log 2> /var/log/selenium/error.log & echo $! > /tmp/selenium.pid
+            export DISPLAY=:99
+            export DBUS_SESSION_BUS_ADDRESS=/dev/null
+            java -jar /home/vagrant/selenium.jar > /var/log/selenium/output.log 2> /var/log/selenium/error.log & echo $! > /tmp/selenium.pid
             echo "Reload Selenium..."
         else
             echo "Selenium isn't running..."
@@ -68,8 +70,15 @@ esac
 EOF
 )
 
-sudo npm install selenium-standalone@4.7.2 -g
-sudo selenium-standalone install
+wget http://selenium-release.storage.googleapis.com/2.53/selenium-server-standalone-2.53.1.jar -O /home/vagrant/selenium.jar
+wget https://chromedriver.storage.googleapis.com/2.25/chromedriver_linux64.zip -O /home/vagrant/chromedriver_linux64.zip
+sudo apt-get install unzip -y
+unzip chromedriver_linux64.zip
+chmod +x chromedriver
+sudo mv -f chromedriver /usr/local/share/chromedriver
+sudo ln -s /usr/local/share/chromedriver /usr/local/bin/chromedriver
+sudo ln -s /usr/local/share/chromedriver /usr/bin/chromedriver
+
 sudo echo "$service" > /etc/init.d/selenium
 sudo chmod 755 /etc/init.d/selenium
 sudo mkdir -p /var/log/selenium
